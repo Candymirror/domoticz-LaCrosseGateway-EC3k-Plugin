@@ -15,3 +15,10 @@ To use this plugin you'll need a La Crosse Gateway. I build mine myself.
 Put these files in a new folder in your Domoticz plugin folder, restart domoticz.
 
 Once restarted go to Hardware and choose type LaCrosseGateway, fill in the IP address of the LGW and port (81 or 82). Give it a name and all plugged EC3k devices should be found if you allow Domoticz to automatically accept new Hardware/sensors
+
+The "Device Mode" field isn't used in domoticz plugin setting yet, but the LGW is (for now) hardcoded set to listen for EC3k devices.
+Also tried to add some support for other devices than the EC3k and added code to decode pca301 messages. No support though in the plugin.py yet.
+
+ToDo:
+Change the plugin to allow to set different lgw modes trough domoticz.
+Add support for other LGW supported devices like PCA301, EM7110 and the LGW status messages them self.

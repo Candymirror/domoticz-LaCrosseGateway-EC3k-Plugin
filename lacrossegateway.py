@@ -92,9 +92,3 @@ def parse(Data):
             return sensortype, data
     else:
         return None
-
-#def set_radio(mode):
-#    """Write to socket."""
-#    data = "20000#1r"
-#    self.sock.send((data + '\r\n').encode())
-#    logging.info("Setting LGW radio to listen to ec3k")

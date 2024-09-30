@@ -2,7 +2,7 @@
 Domoticz Plugin for EC3k (La Crosse energy count 3000) devices Through FHEM LaCrosseGateway
 
 Disclamer!
-Here's my first attempt at writing a Domoticz plugin. I'm not a python programmer nor a programmer at all. So this is not the best code around.
+Here's my first attempt at writing a Domoticz plugin. I'm not a python programmer nor a programmer at all. So this is probably not the best code around.
 All is based upon the work of:
 Innovatone: https://github.com/Innovatone/python-lacrossegateway
 Fhem La Crosse Gateway: FHEM/36_LaCrosseGateway.pm and FHEM/36_EC3000.pm

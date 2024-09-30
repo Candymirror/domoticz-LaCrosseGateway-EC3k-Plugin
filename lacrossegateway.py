@@ -30,7 +30,7 @@ def decodeEC3k(data):
 def decodeKVP(data):
     """
     The output can be:
-    - OK VALUES LGW 8936539 UpTimeSeconds=280010,UpTimeText=3Tg. 5Std. 46Min. 50Sek. ,WIFI=mirrornet,ReceivedFrames=76447,FramesPerMinute=24,RSSI=-19,FreeHeap=24888,LD.Min=0.52,LD.Avg=0.53,LD.Max=26.46,OLED=none
+    - OK VALUES LGW 8936539 UpTimeSeconds=280010,UpTimeText=3Tg. 5Std. 46Min. 50Sek. ,WIFI=myaccespoint,ReceivedFrames=76447,FramesPerMinute=24,RSSI=-19,FreeHeap=24888,LD.Min=0.52,LD.Avg=0.53,LD.Max=26.46,OLED=none
     """
 
 def decodePCA301(data):

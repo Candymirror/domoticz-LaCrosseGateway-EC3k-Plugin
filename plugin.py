@@ -1,4 +1,4 @@
-# Hewalex Python Plugin for Domoticz
+# LaCrosseGateway Python Plugin for Domoticz
 #
 # Authors: RvdVeen
 #
@@ -33,11 +33,9 @@
     </description>
     <params>
         <param field="Address" label="IP Address" width="200px" required="true"/>
-        <param field="Port" label="Port" width="30px" required="true" default="8899"/>
-        <param field="Mode1" label="Device & Mode" width="200px" required="true">
-            <options>
-                <option label="EC3k" value="1" default="EC3k"/>
-            </options>
+        <param field="Port" label="Port" width="30px" required="true" default="81"/>
+        <param field="Mode1" label="LGW initCommand" width="200px" required="true" default="20000#1r">
+            <description><h3>LGW initCommand</h3>For example enter "20000#1r" below to set the first rfm69 to 20000kbps, to use it with an EC3k. See https://wiki.fhem.de/wiki/LaCrosseGateway_V1.x or http://"lgw-ip"/help for more information.</description>
         </param>
         <param field="Mode2" label="Query interval" width="75px" required="true">
             <options>
@@ -85,7 +83,7 @@ class BasePlugin:
 
     def onConnect(self, Connection, Status, Description):
         Domoticz.Debug("onConnect called")
-        data = "20000#1r"
+        data = Parameters["Mode1"]
         self.websocketConn.Send((data + '\r\n').encode())
         Domoticz.Log("Setting LGW radio to listen to ec3k")
 
@@ -102,14 +100,25 @@ class BasePlugin:
                 if Devices[unit].DeviceID == values[0]:
                     Devices[unit].Update(nValue=0, sValue=str(values[1]) + ";" + str(values[2]))
                     ec3kDeviceExists = True
-                    Domoticz.Debug("EC3k device with sensorID :"+values[0]+" updated")
+                    Domoticz.Debug("EC3k device with sensorID: "+values[0]+" updated")
             if ec3kDeviceExists == False:
                 Domoticz.Log("Found new EC3k device with sensorID "+values[0]+ ", trying to add Device")
                 Domoticz.Device(Name="EC3k_"+values[0], DeviceID=values[0], Unit=len(Devices)+1, TypeName="kWh").Create()
         if device[0] == "Info":
             values = lacrossegateway.decodeInfo(device[1])
             Domoticz.Debug(values)
-
+        if device[0] == "LaCrosseWS":
+            values = lacrossegateway.decodeLaCrosseWS(device[1])
+            Domoticz.Debug(values)
+            LaCrosseWSExists = False
+            for unit in Devices:
+                if Devices[unit].DeviceID == str(values[0]):
+                    Devices[unit].Update(nValue=0, sValue=str(values[1]) + ";" + str(values[2]) + ";" + str(values[3]))
+                    LaCrosseWSExists = True
+                    Domoticz.Debug("LaCrosseWS device with sensorID: "+str(values[0])+" updated")
+            if LaCrosseWSExists == False:
+                Domoticz.Log("Found new  device with sensorID "+str(values[0])+ ", trying to add Device")
+                Domoticz.Device(Name="WS"+str(values[0]), DeviceID=str(values[0]), Unit=len(Devices)+1, TypeName="Temp+Hum").Create()
 
     def onCommand(self, DeviceID, Unit, Command, Level, Color):
         Domoticz.Debug("onCommand called for Device " + str(DeviceID) + " Unit " + str(Unit) + ": Parameter '" + str(Command) + "', Level: " + str(Level))
